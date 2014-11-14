@@ -25,6 +25,8 @@ public:
 
     // assume X is on surface
     virtual Vector3F normal(const Vector3F &X) const = 0;
+
+    // assume p is on surface?
     virtual Color colorAtPoint(const Vector3F &p) const {return surfaceColor;}
 };
 
@@ -73,6 +75,8 @@ public:
     ~Scene();
     void addObject(SceneObject* o);
     void addLight(Light* l);
+    Color traceRay(Ray &r) const;
+    SceneObject* findClosestObject(const Ray &r, float &tIntersect) const;
 };
 
 

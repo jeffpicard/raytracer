@@ -100,3 +100,36 @@ void Scene::addLight(Light *l) {
     assert(l != 0);
     lights.push_back(l);
 }
+
+Color Scene::traceRay(Ray &r) const {
+    float tIntersect;
+    SceneObject* object = findClosestObject(r, tIntersect);
+    if (object == 0) { // no intersections
+        return Color(0., 0., 0.);
+    }
+    Color finalColor = Color(0, 0, 0);
+    Vector3F intersect_loc = r.getPointAtT(tIntersect);
+
+    vector<Light*>::const_iterator it;
+    for (it = lights.begin(); it != lights.end(); it++) {
+        Vector3F L = ((*it)->getPosition() - intersect_loc).normalize();
+        Vector3F N = object->normal(intersect_loc);
+        finalColor += (*it)->getColor() * object->colorAtPoint(intersect_loc) \
+                      * fmaxf(N * L, 0);
+    }
+}
+
+SceneObject* Scene::findClosestObject(const Ray &r, float &tIntersect) const {
+    vector<SceneObject*>::const_iterator it;
+    float t_min = 99999999.9;
+    SceneObject* object_min = 0;
+    for (it = objects.begin(); it != objects.end(); it++) {
+        float t_curr = (*it)->intersection(r);
+        if (t_curr != NO_INTERSECT && t_curr < t_min) {
+            t_min = t_curr;
+            object_min = *it;
+        }
+    }
+    tIntersect = t_min;
+    return object_min;
+}
