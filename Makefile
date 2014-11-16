@@ -6,7 +6,7 @@ GTEST_DIR = ./gtest-1.7.0
 
 FLAGS = -W -std=c++11
 
-all: $(TESTS) Ray.o Scene.o
+all: $(TESTS) Ray.o Scene.o Camera.o
 
 
 
@@ -62,6 +62,8 @@ Ray.o: Ray.cc Ray.hh
 Scene.o: Scene.cc Scene.hh Vector3F.o Color.o Ray.o
 	g++ $(FLAGS) -c Scene.cc
 
+Camera.o: Camera.cc Camera.hh Vector3F.o Ray.o
+	g++ $(FLAGS) -c Camera.cc
 
 
 
