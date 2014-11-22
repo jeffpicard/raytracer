@@ -26,6 +26,7 @@ public:
     void set_red(float val);
     void set_green(float val);
     void set_blue(float val);
+    void clamp(float minVal, float maxVal);
 
     Color & operator+=(const Color &col);
     Color & operator-=(const Color &col);

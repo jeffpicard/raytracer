@@ -4,8 +4,10 @@
 #include "Color.hh"
 #include "Ray.hh"
 #include "Vector3F.hh"
+#include "Camera.hh"
 #include "Light.hh"
 #include <vector>
+#include <iostream>
 
 #define NO_INTERSECT -1
 
@@ -77,6 +79,7 @@ public:
     void addLight(Light* l);
     Color traceRay(Ray &r) const;
     SceneObject* findClosestObject(const Ray &r, float &tIntersect) const;
+    void render(const Camera &cam, int imgSize, ostream &os);
 };
 
 

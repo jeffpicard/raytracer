@@ -7,7 +7,7 @@ Camera::Camera(Vector3F pos, Vector3F look, Vector3F up, float fov) {
     direction = (look - location).normalize();
     cameraRight = (direction.cross(up)).normalize();
     cameraUp = (cameraRight.cross(direction)).normalize();
-    fov = M_PI / 180;  // convert to radians
+    fov *= M_PI / 180;  // convert to radians
     dist = 0.5 / tanf(fov / 2.);
 }
 

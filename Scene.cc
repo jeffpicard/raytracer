@@ -117,6 +117,7 @@ Color Scene::traceRay(Ray &r) const {
         finalColor += (*it)->getColor() * object->colorAtPoint(intersect_loc) \
                       * fmaxf(N * L, 0);
     }
+    return finalColor;
 }
 
 SceneObject* Scene::findClosestObject(const Ray &r, float &tIntersect) const {
@@ -132,4 +133,23 @@ SceneObject* Scene::findClosestObject(const Ray &r, float &tIntersect) const {
     }
     tIntersect = t_min;
     return object_min;
+}
+
+void Scene::render(const Camera &cam, int imgSize, ostream &os) {
+    int maxVal = 255; // maximum color value for pixmap format
+    os << "P3 " << imgSize << " " << imgSize << " " << maxVal << endl;
+    for (int y = 0; y < imgSize; y++) {
+        for (int x = 0; x < imgSize; x++) {
+            Ray pixelRay = cam.getRayForPixel(x, y, imgSize);
+            Color pixelColor = traceRay(pixelRay);
+
+            pixelColor *= maxVal;
+            pixelColor.clamp(0, maxVal);
+
+            os << round(pixelColor.get_red()) << " "
+               << round(pixelColor.get_green()) << " " 
+               << round(pixelColor.get_blue()) << endl;
+
+        }
+    }
 }

@@ -44,6 +44,27 @@ void Color::set_blue(float val) {
     blue = val;
 }
 
+void Color::clamp(float minVal, float maxVal) {
+    if (red < minVal) {red = 0;}
+    if (green < minVal) {green = 0;}
+    if (blue < minVal) {blue = 0;}
+    float maxColor = maxVal;
+    if (red > maxColor) {maxColor = red;}
+    if (green > maxColor) {maxColor = green;}
+    if (blue > maxColor) {maxColor = blue;}
+    if (maxColor > maxVal) {
+        red *= maxVal / maxColor;
+        green *= maxVal / maxColor;
+        blue *= maxVal / maxColor;
+    }
+    assert(red >= minVal);
+    assert(red <= maxVal);
+    assert(green >= minVal);
+    assert(green <= maxVal);
+    assert(blue >= minVal);
+    assert(blue <= maxVal);
+}
+
 
 // Increases a color element-wise
 // col is the amount to increase each component

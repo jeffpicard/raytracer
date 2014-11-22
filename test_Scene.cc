@@ -3,6 +3,7 @@
 #include "Light.hh"
 #include "Scene.hh"
 #include "Vector3F.hh"
+#include <iostream>
 
 using namespace testing;
 
@@ -33,6 +34,20 @@ TEST(SceneObjects, Sphere) {
     target.getIntersections(beam,t1,t2);
     EXPECT_FLOAT_EQ(t1, 1.0);
     EXPECT_FLOAT_EQ(t2, 3.0);
+
+    boom = target.normal(boom);
+    EXPECT_FLOAT_EQ(boom[0], -dir[0]);
+    EXPECT_FLOAT_EQ(boom[1], dir[1]);
+    EXPECT_FLOAT_EQ(boom[2], dir[2]);
+
+
+    Plane target2(1.0, -dir);
+    t1 = target2.intersection(beam);
+    boom = beam.getPointAtT(t1);
+    EXPECT_FLOAT_EQ(boom[0], 1.0);
+    EXPECT_FLOAT_EQ(boom[1], 0.0);
+    
+
 }
 
 
