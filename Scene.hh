@@ -8,6 +8,7 @@
 #include "Light.hh"
 #include <vector>
 #include <iostream>
+#include <boost/shared_ptr.hpp>
 
 #define NO_INTERSECT -1
 
@@ -32,7 +33,8 @@ public:
     virtual Color colorAtPoint(const Vector3F &p) const {return surfaceColor;}
 };
 
-
+// Boost shared-ownership smart pointer for scene objects
+typedef boost::shared_ptr<SceneObject> SPSceneObject;
 
 
 
@@ -70,17 +72,19 @@ public:
 
 
 class Scene {
-    vector<SceneObject*> objects;
-    vector<Light*> lights;
+    vector<SPSceneObject> objects;
+    vector<SPLight> lights;
 public:
     Scene() {}
     ~Scene();
-    void addObject(SceneObject* o);
-    void addLight(Light* l);
+    void addObject(SPSceneObject o);
+    void addLight(SPLight l);
     Color traceRay(Ray &r) const;
-    SceneObject* findClosestObject(const Ray &r, float &tIntersect) const;
+    SPSceneObject findClosestObject(const Ray &r, float &tIntersect) const;
     void render(const Camera &cam, int imgSize, ostream &os);
 };
+
+
 
 
 #endif

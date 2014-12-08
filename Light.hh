@@ -3,6 +3,8 @@
 
 #include "Vector3F.hh"
 #include "Color.hh"
+#include <boost/shared_ptr.hpp>
+
 
 class Light {
     Vector3F position;
@@ -13,8 +15,8 @@ public:
     Color getColor() const {return color;}
 };
 
-
-
+// Boost shared-ownership smart pointer for scene objects
+typedef boost::shared_ptr<Light> SPLight;
 
 
 #endif

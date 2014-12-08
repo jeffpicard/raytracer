@@ -3,7 +3,13 @@
 #include <cassert>
 #include <algorithm>
 
-
+/**
+ * @brief Determines stuff
+ *
+ * @paramp[in] r ray to Blach
+ *
+ * @return The intersection tim
+ */
 float Plane::intersection(const Ray &r) const {
     Vector3F P = r.getOrigin();
     Vector3F D = r.getDirection();
@@ -14,7 +20,9 @@ float Plane::intersection(const Ray &r) const {
     return t >= 0 ? t : NO_INTERSECT;
 }
 
-
+/**
+ * @brief stuff
+ */
 Vector3F Plane::normal(const Vector3F &X) const {
     return N;
 }
@@ -87,30 +95,30 @@ int Sphere::getIntersections(const Ray &r, float &t1, float &t2) const {
 
 Scene::~Scene() {
 
-    for_each(objects.begin(), objects.end(), DeleteObject());
-    for_each(lights.begin(), lights.end(), DeleteObject());
+//    for_each(objects.begin(), objects.end(), DeleteObject());
+//    for_each(lights.begin(), lights.end(), DeleteObject());
 }
 
-void Scene::addObject(SceneObject* o) {
+void Scene::addObject(SPSceneObject o) {
     assert(o != 0);
     objects.push_back(o);
 }
 
-void Scene::addLight(Light *l) {
+void Scene::addLight(SPLight l) {
     assert(l != 0);
     lights.push_back(l);
 }
 
 Color Scene::traceRay(Ray &r) const {
     float tIntersect;
-    SceneObject* object = findClosestObject(r, tIntersect);
+    SPSceneObject object = findClosestObject(r, tIntersect);
     if (object == 0) { // no intersections
         return Color(0., 0., 0.);
     }
     Color finalColor = Color(0, 0, 0);
     Vector3F intersect_loc = r.getPointAtT(tIntersect);
 
-    vector<Light*>::const_iterator it;
+    vector<SPLight>::const_iterator it;
     for (it = lights.begin(); it != lights.end(); it++) {
         Vector3F L = ((*it)->getPosition() - intersect_loc).normalize();
         Vector3F N = object->normal(intersect_loc);
@@ -120,10 +128,10 @@ Color Scene::traceRay(Ray &r) const {
     return finalColor;
 }
 
-SceneObject* Scene::findClosestObject(const Ray &r, float &tIntersect) const {
-    vector<SceneObject*>::const_iterator it;
+SPSceneObject Scene::findClosestObject(const Ray &r, float &tIntersect) const {
+    vector<SPSceneObject>::const_iterator it;
     float t_min = 99999999.9;
-    SceneObject* object_min = 0;
+    SPSceneObject object_min = 0;
     for (it = objects.begin(); it != objects.end(); it++) {
         float t_curr = (*it)->intersection(r);
         if (t_curr != NO_INTERSECT && t_curr < t_min) {
