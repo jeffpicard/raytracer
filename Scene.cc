@@ -1,14 +1,17 @@
+/**
+ * @file Scene.cc
+ */
+
 #include "Scene.hh"
 #include <cmath>
 #include <cassert>
 #include <algorithm>
 
 /**
- * @brief Determines stuff
- *
- * @paramp[in] r ray to Blach
- *
- * @return The intersection tim
+ * Calculate the t-value at which a ray first intersects this plane
+ * @param r Intersecting ray
+ * @return The t-value of the intersection, or NO_INTERSECT if the ray does not
+ * intersect.
  */
 float Plane::intersection(const Ray &r) const {
     Vector3F P = r.getOrigin();
@@ -21,7 +24,9 @@ float Plane::intersection(const Ray &r) const {
 }
 
 /**
- * @brief stuff
+ * Returns the normal to the surface at point X
+ * @param X The point on the surface to take the normal. Assumes X is on
+ * the surface
  */
 Vector3F Plane::normal(const Vector3F &X) const {
     return N;
@@ -29,19 +34,36 @@ Vector3F Plane::normal(const Vector3F &X) const {
 
 
 
-
-
-
+/**
+ * Calculate the t-value at which a ray first intersects the sphere
+ * @param r Intersecting ray
+ * @return The t-value of the intersection, or NO_INTERSECT if the ray does not
+ * intersect.
+ */
 float Sphere::intersection(const Ray &r) const {
     float t1, t2;
     getIntersections(r, t1, t2);
     return t1;
 }
 
+/**
+ * Returns the normal to the surface at point X
+ * @param X The point on the surface to take the normal. Assumes X is on
+ * the surface
+ */
 Vector3F Sphere::normal(const Vector3F &X) const {
     return (X - center).normalize();
 }
 
+/**
+ * Calculate the t-values of all points at which a ray intersects the sphere
+ * @param r Intersecting ray
+ * @param t1 Modifies t1 to be the t-value of the first intersection, or
+ * NO_INTERSECT if there're no intersections
+ * @param t2 Modifies t2 to be the t-value of the second intersection, or
+ * NO_INTERSECT if there're less than 2 intersections
+ * @return the number of intersections
+ */
 int Sphere::getIntersections(const Ray &r, float &t1, float &t2) const {
     Vector3F P = r.getOrigin();
     Vector3F D = r.getDirection();
@@ -83,32 +105,28 @@ int Sphere::getIntersections(const Ray &r, float &t1, float &t2) const {
 }
 
 
-
-
-/*for some reason this can't live inside ~Scene. I'll try to fix later */
-    struct DeleteObject {
-        template<typename T>
-        void operator()(const T *ptr) const {
-            delete ptr;
-        }
-    };
-
-Scene::~Scene() {
-
-//    for_each(objects.begin(), objects.end(), DeleteObject());
-//    for_each(lights.begin(), lights.end(), DeleteObject());
-}
-
+/**
+ * Adds object o to the scene
+ */
 void Scene::addObject(SPSceneObject o) {
     assert(o != 0);
     objects.push_back(o);
 }
 
+/**
+ * Adds light l to the scene
+ */
 void Scene::addLight(SPLight l) {
     assert(l != 0);
     lights.push_back(l);
 }
 
+/**
+ * Calculates the color that a given ray should be given the lights and
+ * objects in the scene.
+ * @param r The ray to trace
+ * @return The color of the ray. Black if no object is intercepted.
+ */
 Color Scene::traceRay(Ray &r) const {
     float tIntersect;
     SPSceneObject object = findClosestObject(r, tIntersect);
@@ -128,6 +146,14 @@ Color Scene::traceRay(Ray &r) const {
     return finalColor;
 }
 
+/**
+ * Determines the first object in the scene a ray will intersect.
+ * @param r The ray of interest
+ * @param tIntersect This function modifies tIntersect to be the time of
+ * intersection with the first object
+ * @return shared_ptr to the object first intersected. 0 if this ray does
+ * not intersect any objects 
+ */
 SPSceneObject Scene::findClosestObject(const Ray &r, float &tIntersect) const {
     vector<SPSceneObject>::const_iterator it;
     float t_min = 99999999.9;
@@ -143,6 +169,12 @@ SPSceneObject Scene::findClosestObject(const Ray &r, float &tIntersect) const {
     return object_min;
 }
 
+/**
+ * Prints the color of each pixel in an image.
+ * @param cam The camera the scene is seen from
+ * @param imgSize The number of pixels wide and tall the image should be
+ * @param os Where to print the image
+ */
 void Scene::render(const Camera &cam, int imgSize, ostream &os) {
     int maxVal = 255; // maximum color value for pixmap format
     os << "P3 " << imgSize << " " << imgSize << " " << maxVal << endl;

@@ -23,7 +23,7 @@ all: rt
 
 tests: $(TESTS)
 
-SRCS = Camera.cc Color.cc Ray.cc rt.cc Scene.cc Vector3F.cc \
+SRCS = Camera.cc Color.cc Ray.cc rt.cc Scene.cc Vector3F.cc
 
 TESTSRC = test_Color.cc test_Scene.cc test_Vector3F.cc
 
@@ -64,7 +64,8 @@ depend:
 	makedepend -- $(CXXFLAGS) -I. -- $(SRCS) $(TESTSRCS)
 
 clean:
-	rm -f *.o $(TESTS) gtest.a rt Makefile.bak balls.png -r docs
+	rm -f *.o $(TESTS) gtest.a rt Makefile.bak balls.png
+	rm -r docs
 
 # DO NOT DELETE THIS LINE -- make depend depends on it
 

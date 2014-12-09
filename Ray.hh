@@ -1,8 +1,15 @@
+/**
+ * @file Ray.hh
+ */
+
 #ifndef RAY_HH
 #define RAY_HH
 
 #include "Vector3F.hh"
 
+/**
+ * Represent a ray in 3D space
+ */
 class Ray {
     Vector3F origin;
     Vector3F direction;
@@ -13,7 +20,5 @@ public:
     Vector3F getPointAtT(float t) const;
 
 };
-
-
 
 #endif

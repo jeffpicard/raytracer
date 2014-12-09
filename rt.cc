@@ -1,3 +1,7 @@
+/**
+ * @file rt.cc
+ */
+
 #include "Scene.hh"
 #include "Camera.hh"
 #include "Light.hh"

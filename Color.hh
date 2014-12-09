@@ -1,3 +1,7 @@
+/**
+ * @file Color.hh
+ */
+
 #ifndef COLOR_HH
 #define COLOR_HH
 
@@ -5,19 +9,25 @@
 
 using namespace std;
 
-// Represents an RGB color
+/**
+ * Represents an RGB color
+ */
 class Color {
     float red;
     float green;
     float blue;
 public:
-    // Initialize to black
+    /**
+     * Initialize a color to black
+     */
     Color() {red=0; blue=0; green=0;}
 
-    // Initialize to custom color
-    // r in [0, 1] is the red component
-    // g in [0, 1] is the green component
-    // b in [0, 1] is the blue component
+    /**
+     * Initialize to custom color
+     * @param r Red component in [0, 1]
+     * @param g Green component in [0, 1]
+     * @param b Blue component in [0, 1]
+     */
     Color(float r, float g, float b) : red(r), green(g), blue(b) {}
 
     float get_red() const;

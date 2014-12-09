@@ -1,9 +1,17 @@
+/**
+ * @file Camera.hh
+ */
+
 #ifndef CAMERA_HH
 #define CAMERA_HH
 
 #include "Vector3F.hh"
 #include "Ray.hh"
 
+
+/**
+ * Represents the camera where the raytraced image is seen from
+ */
 class Camera {
     Vector3F location;
     Vector3F direction;
@@ -16,10 +24,6 @@ public:
     Ray getRayForPixel(int x, int y, int imgSize) const;
 
 };
-
-
-
-
 
 
 #endif
