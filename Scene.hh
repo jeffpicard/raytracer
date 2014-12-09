@@ -120,7 +120,7 @@ class Scene {
     vector<SPLight> lights;
 public:
     Scene() {}
-    ~Scene();
+    ~Scene() {};
     void addObject(SPSceneObject o);
     void addLight(SPLight l);
     Color traceRay(Ray &r) const;

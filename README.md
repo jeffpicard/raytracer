@@ -7,12 +7,12 @@ Raytracer in C++
 To run:
 'make' compiles everything. 
 'make image' compiles (if necessary) and runs the raytracer
-'make tests' compiles the Google Unit Tests
 'make depend' updates dependencies
 'make clean' cleans the directory
 
 
-Unit tests:
+Google Unit tests:
+make tests
 ./test_Vector3F
 ./test_Color
 ./test_Scene
