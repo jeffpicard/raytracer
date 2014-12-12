@@ -122,6 +122,13 @@ void Scene::addLight(SPLight l) {
 }
 
 /**
+ * Sets c to be the scene's camera
+ */
+void Scene::set_camera(SPCamera c) {
+    cam = c;
+}
+
+/**
  * Calculates the color that a given ray should be given the lights and
  * objects in the scene.
  * @param r The ray to trace
@@ -171,16 +178,15 @@ SPSceneObject Scene::findClosestObject(const Ray &r, float &tIntersect) const {
 
 /**
  * Prints the color of each pixel in an image.
- * @param cam The camera the scene is seen from
  * @param imgSize The number of pixels wide and tall the image should be
  * @param os Where to print the image
  */
-void Scene::render(const Camera &cam, int imgSize, ostream &os) {
+void Scene::render(int imgSize, ostream &os) {
     int maxVal = 255; // maximum color value for pixmap format
     os << "P3 " << imgSize << " " << imgSize << " " << maxVal << endl;
     for (int y = 0; y < imgSize; y++) {
         for (int x = 0; x < imgSize; x++) {
-            Ray pixelRay = cam.getRayForPixel(x, y, imgSize);
+            Ray pixelRay = cam->getRayForPixel(x, y, imgSize);
             Color pixelColor = traceRay(pixelRay);
 
             pixelColor *= maxVal;

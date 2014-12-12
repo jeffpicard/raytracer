@@ -23,7 +23,7 @@ all: rt
 
 tests: $(TESTS)
 
-SRCS = Camera.cc Color.cc Ray.cc rt.cc Scene.cc Vector3F.cc
+SRCS = Camera.cc Color.cc Ray.cc rt.cc Scene.cc Vector3F.cc scene_generator.cc
 
 TESTSRC = test_Color.cc test_Scene.cc test_Vector3F.cc
 
@@ -55,7 +55,7 @@ gtest.a: gtest-all.o
 
 
 image: rt
-	./rt | pnmtopng > balls.png
+	./rt < scene_lab4.txt | pnmtopng > balls.png
 
 docs:
 	doxygen Doxyfile
@@ -69,10 +69,41 @@ clean:
 
 # DO NOT DELETE THIS LINE -- make depend depends on it
 
-Camera.o: Camera.hh Vector3F.hh Ray.hh
+Camera.o: Camera.hh Vector3F.hh Ray.hh /usr/include/boost/shared_ptr.hpp
+Camera.o: /usr/include/boost/smart_ptr/shared_ptr.hpp
+Camera.o: /usr/include/boost/config.hpp /usr/include/boost/config/user.hpp
+Camera.o: /usr/include/boost/config/select_compiler_config.hpp
+Camera.o: /usr/include/boost/config/compiler/gcc.hpp
+Camera.o: /usr/include/boost/config/select_platform_config.hpp
+Camera.o: /usr/include/boost/config/posix_features.hpp /usr/include/unistd.h
+Camera.o: /usr/include/features.h /usr/include/stdc-predef.h
+Camera.o: /usr/include/getopt.h /usr/include/boost/config/suffix.hpp
+Camera.o: /usr/include/boost/config/no_tr1/memory.hpp
+Camera.o: /usr/include/boost/assert.hpp /usr/include/assert.h
+Camera.o: /usr/include/boost/current_function.hpp
+Camera.o: /usr/include/boost/checked_delete.hpp
+Camera.o: /usr/include/boost/throw_exception.hpp
+Camera.o: /usr/include/boost/exception/detail/attribute_noreturn.hpp
+Camera.o: /usr/include/boost/detail/workaround.hpp
+Camera.o: /usr/include/boost/config.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/shared_count.hpp
+Camera.o: /usr/include/boost/smart_ptr/bad_weak_ptr.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/sp_counted_base.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/sp_has_sync.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp
+Camera.o: /usr/include/boost/detail/sp_typeinfo.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/sp_counted_impl.hpp
+Camera.o: /usr/include/boost/utility/addressof.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/sp_convertible.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/sp_nullptr_t.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/spinlock_pool.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/spinlock.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/spinlock_nt.hpp
+Camera.o: /usr/include/boost/memory_order.hpp
+Camera.o: /usr/include/boost/smart_ptr/detail/operator_bool.hpp
 Color.o: Color.hh
 Ray.o: Ray.hh Vector3F.hh
-rt.o: Scene.hh Color.hh Ray.hh Vector3F.hh Camera.hh Light.hh
+rt.o: scene_generator.hh Scene.hh Color.hh Ray.hh Vector3F.hh Camera.hh
 rt.o: /usr/include/boost/shared_ptr.hpp
 rt.o: /usr/include/boost/smart_ptr/shared_ptr.hpp
 rt.o: /usr/include/boost/config.hpp /usr/include/boost/config/user.hpp
@@ -103,8 +134,8 @@ rt.o: /usr/include/boost/smart_ptr/detail/spinlock_pool.hpp
 rt.o: /usr/include/boost/smart_ptr/detail/spinlock.hpp
 rt.o: /usr/include/boost/smart_ptr/detail/spinlock_nt.hpp
 rt.o: /usr/include/boost/memory_order.hpp
-rt.o: /usr/include/boost/smart_ptr/detail/operator_bool.hpp
-Scene.o: Scene.hh Color.hh Ray.hh Vector3F.hh Camera.hh Light.hh
+rt.o: /usr/include/boost/smart_ptr/detail/operator_bool.hpp Light.hh
+Scene.o: Scene.hh Color.hh Ray.hh Vector3F.hh Camera.hh
 Scene.o: /usr/include/boost/shared_ptr.hpp
 Scene.o: /usr/include/boost/smart_ptr/shared_ptr.hpp
 Scene.o: /usr/include/boost/config.hpp /usr/include/boost/config/user.hpp
@@ -136,5 +167,41 @@ Scene.o: /usr/include/boost/smart_ptr/detail/spinlock_pool.hpp
 Scene.o: /usr/include/boost/smart_ptr/detail/spinlock.hpp
 Scene.o: /usr/include/boost/smart_ptr/detail/spinlock_nt.hpp
 Scene.o: /usr/include/boost/memory_order.hpp
-Scene.o: /usr/include/boost/smart_ptr/detail/operator_bool.hpp
+Scene.o: /usr/include/boost/smart_ptr/detail/operator_bool.hpp Light.hh
 Vector3F.o: Vector3F.hh
+scene_generator.o: scene_generator.hh Scene.hh Color.hh Ray.hh Vector3F.hh
+scene_generator.o: Camera.hh /usr/include/boost/shared_ptr.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/shared_ptr.hpp
+scene_generator.o: /usr/include/boost/config.hpp
+scene_generator.o: /usr/include/boost/config/user.hpp
+scene_generator.o: /usr/include/boost/config/select_compiler_config.hpp
+scene_generator.o: /usr/include/boost/config/compiler/gcc.hpp
+scene_generator.o: /usr/include/boost/config/select_platform_config.hpp
+scene_generator.o: /usr/include/boost/config/posix_features.hpp
+scene_generator.o: /usr/include/unistd.h /usr/include/features.h
+scene_generator.o: /usr/include/stdc-predef.h /usr/include/getopt.h
+scene_generator.o: /usr/include/boost/config/suffix.hpp
+scene_generator.o: /usr/include/boost/config/no_tr1/memory.hpp
+scene_generator.o: /usr/include/boost/assert.hpp /usr/include/assert.h
+scene_generator.o: /usr/include/boost/current_function.hpp
+scene_generator.o: /usr/include/boost/checked_delete.hpp
+scene_generator.o: /usr/include/boost/throw_exception.hpp
+scene_generator.o: /usr/include/boost/exception/detail/attribute_noreturn.hpp
+scene_generator.o: /usr/include/boost/detail/workaround.hpp
+scene_generator.o: /usr/include/boost/config.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/shared_count.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/bad_weak_ptr.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/sp_counted_base.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/sp_has_sync.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp
+scene_generator.o: /usr/include/boost/detail/sp_typeinfo.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/sp_counted_impl.hpp
+scene_generator.o: /usr/include/boost/utility/addressof.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/sp_convertible.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/sp_nullptr_t.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/spinlock_pool.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/spinlock.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/spinlock_nt.hpp
+scene_generator.o: /usr/include/boost/memory_order.hpp
+scene_generator.o: /usr/include/boost/smart_ptr/detail/operator_bool.hpp
+scene_generator.o: Light.hh

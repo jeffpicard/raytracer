@@ -7,7 +7,7 @@
 
 #include "Vector3F.hh"
 #include "Ray.hh"
-
+#include <boost/shared_ptr.hpp>
 
 /**
  * Represents the camera where the raytraced image is seen from
@@ -25,5 +25,7 @@ public:
 
 };
 
+// Boost shared-ownership smart pointer for camera
+typedef boost::shared_ptr<Camera> SPCamera;
 
 #endif

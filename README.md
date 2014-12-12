@@ -1,14 +1,23 @@
 raytracer
 =========
-
 Raytracer in C++
+Based on Caltech course CS11
+http://courses.cms.caltech.edu/cs11/material/advcpp/
+
+
+Required libraries:
+boost  'sudo apt-get install libboost-all-dev'
+Google C++ Testing Framework (for optional unit tests)
+https://code.google.com/p/googletest/
 
 
 To run:
-'make' compiles everything. 
-'make image' compiles (if necessary) and runs the raytracer
-'make depend' updates dependencies
-'make clean' cleans the directory
+For default scene description from lab4
+'make image'
+
+For a custom scene specified in scene_desc.txt
+'make'
+'./rt < scene_desc.txt | pnmtopng > outputFile.png' 
 
 
 Google Unit tests:
@@ -18,10 +27,3 @@ make tests
 ./test_Scene
 
 
-
-** This repo contains Google C++ Testing Framework which is available here:
-https://code.google.com/p/googletest/
-
-
-Uses boost::shared_ptr. To install boost on Ubuntu:
-'sudo apt-get install libboost-all-dev'

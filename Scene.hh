@@ -118,14 +118,16 @@ public:
 class Scene {
     vector<SPSceneObject> objects;
     vector<SPLight> lights;
+    SPCamera cam;
 public:
     Scene() {}
     ~Scene() {};
     void addObject(SPSceneObject o);
     void addLight(SPLight l);
+    void set_camera(SPCamera c);
     Color traceRay(Ray &r) const;
     SPSceneObject findClosestObject(const Ray &r, float &tIntersect) const;
-    void render(const Camera &cam, int imgSize, ostream &os);
+    void render(int imgSize, ostream &os);
 };
 
 
