@@ -53,5 +53,6 @@ const Color operator*(const Color &col, float s);
 const Color operator*(float s, const Color &col);
 const Color operator/(const Color &col, float s);
 ostream & operator<<(ostream &os, const Color &col);
+istream & operator>>(istream &is, Color &col);
 
 #endif

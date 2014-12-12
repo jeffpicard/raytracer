@@ -193,8 +193,25 @@ const Color operator/(const Color &col, float s) {
  * @param os The stream to print to
  */
 ostream & operator<<(ostream &os, const Color &col){
-    os << "(" << col.get_red() << ", " 
+    os << "[" << col.get_red() << ", " 
               << col.get_green() << ", " 
-       << col.get_blue() << ")";
+       << col.get_blue() << "]";
     return os;
+}
+
+/**
+ * Reads a stream of the form '[0.5, 0.5, 0.9]' from is into col
+ */
+istream & operator>>(istream &is, Color &col) {
+    float r, g, b;
+    char b1, c1, c2, b2;
+    
+    if (!is) return is;
+
+    is >> b1 >> r >> c1 >> g >> c2 >> b >> b2;
+    if (b1 != '[' || c1 != ',' || c2 != ',' || b2 != ']') {
+        is.clear(ios_base::failbit);
+    }
+    if (is) col = Color(r, g, b);
+    return is;
 }

@@ -52,7 +52,9 @@ const Vector3F operator*(float factor, const Vector3F &v);
 const Vector3F operator/(const Vector3F &v, float factor);
 const Vector3F operator-(const Vector3F &v);
 ostream & operator<<(ostream &os, const Vector3F &v);
+istream & operator>>(istream &is, Vector3F &v);
 float operator*(const Vector3F &v1, const Vector3F &v2);
+
 
 
 #endif

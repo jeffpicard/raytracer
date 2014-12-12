@@ -83,11 +83,13 @@ TEST(Vector3FTest, GettingSetting) {
 
 // Tests stream output
 TEST(Vector3FTest, Print) {
-    Vector3F a(2.1, 1.3, -5.2);
     string expected("(2.1, 1.3, -5.2)");
-    ostringstream stream;
-    stream << a;
-    string result = stream.str();
+    stringstream is(expected);
+    Vector3F a;
+    is >> a;
+    stringstream os;
+    os << a;
+    string result = os.str();
     EXPECT_EQ(result, expected);
 }
 

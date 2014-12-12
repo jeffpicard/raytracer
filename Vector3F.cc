@@ -184,6 +184,23 @@ ostream & operator<<(ostream &os, const Vector3F &v) {
 }
 
 /**
+ * Read a stream of the form '(3.3, -2.5, 4.1)' from is into v
+ */
+istream & operator>>(istream &is, Vector3F &v) {
+    float x, y, z;
+    char p1,c1,c2,p2;
+
+    if (!is) return is;
+
+    is >> p1 >> x >> c1 >> y >> c2 >> z >> p2;
+    if (p1 != '(' || c1 != ',' || c2 != ',' || p2 != ')') {
+        is.clear(ios_base::failbit);
+    }
+    if (is) v = Vector3F(x, y , z);
+    return is;    
+}
+
+/**
  * Compute the dot product of two vectors
  * @param v1 The first vector in the product
  * @param v2 The second vector in the product

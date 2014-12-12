@@ -75,11 +75,13 @@ TEST(ColorTest, SimpleArithmetic) {
 
 // Tests stream output for Color
 TEST(ColorTest, Print) {
-    Color a(.2, .8, .6);
-    string expected("(0.2, 0.8, 0.6)");
-    ostringstream stream;
-    stream << a;
-    string result = stream.str();
+    string expected("[0.2, 0.8, 0.6]");
+    stringstream is(expected);
+    Color a;
+    is >> a;
+    stringstream os;
+    os << a;
+    string result = os.str();
     EXPECT_EQ(result, expected);
 }
 
