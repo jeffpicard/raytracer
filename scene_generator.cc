@@ -16,9 +16,11 @@ SPSceneObject scene_generator::ReadPlane(istream &is) {
     Vector3F normal;
     float dist;
     Color col;
-    is >> normal >> dist >> col;
+    float reflectivity;
+    is >> normal >> dist >> col >> reflectivity;
     SPSceneObject p(new Plane(dist, normal));
     p->setSurfaceColor(col);
+    p->set_reflectivity(reflectivity);
     return p;
 };
 
@@ -29,9 +31,11 @@ SPSceneObject scene_generator::ReadSphere(istream &is) {
     Vector3F center;
     float radius;
     Color col;
-    is >> center >> radius >> col;
+    float reflectivity;
+    is >> center >> radius >> col >> reflectivity;
     SPSceneObject s(new Sphere(center, radius));
     s->setSurfaceColor(col);
+    s->set_reflectivity(reflectivity);
     return s;
 };
 

@@ -125,7 +125,6 @@ Vector3F Vector3F::normalize() const {
 
 
 
-
 /*************************************
  * Non member functions and overloads
  ************************************/
@@ -208,4 +207,13 @@ istream & operator>>(istream &is, Vector3F &v) {
  */
 float operator*(const Vector3F &v1, const Vector3F &v2) {
     return v1.dot(v2);
+}
+
+
+/**
+ * Project a onto b
+ * @return a projected onto b as a Vector3F
+ */
+Vector3F project(const Vector3F &a, const Vector3F &b) {
+    return b * ((a * b) / (b * b));
 }

@@ -55,6 +55,6 @@ ostream & operator<<(ostream &os, const Vector3F &v);
 istream & operator>>(istream &is, Vector3F &v);
 float operator*(const Vector3F &v1, const Vector3F &v2);
 
-
+Vector3F project(const Vector3F &a, const Vector3F &b);
 
 #endif

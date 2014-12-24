@@ -134,23 +134,29 @@ void Scene::set_camera(SPCamera c) {
  * @param r The ray to trace
  * @return The color of the ray. Black if no object is intercepted.
  */
-Color Scene::traceRay(Ray &r) const {
+Color Scene::traceRay(Ray &r, int depth) const {
+    int DEPTH_LIMIT = 10;
     float tIntersect;
     SPSceneObject object = findClosestObject(r, tIntersect);
     if (object == 0) { // no intersections
         return Color(0., 0., 0.);
     }
-    Color finalColor = Color(0, 0, 0);
+    Color result_color = Color(0, 0, 0);
     Vector3F intersect_loc = r.getPointAtT(tIntersect);
 
     vector<SPLight>::const_iterator it;
     for (it = lights.begin(); it != lights.end(); it++) {
         Vector3F L = ((*it)->getPosition() - intersect_loc).normalize();
-        Vector3F N = object->normal(intersect_loc);
-        finalColor += (*it)->getColor() * object->colorAtPoint(intersect_loc) \
+        Vector3F N = object->normal(intersect_loc); // normal at intersection
+        result_color += (*it)->getColor() * object->colorAtPoint(intersect_loc) \
                       * fmaxf(N * L, 0);
     }
-    return finalColor;
+    if (object->get_reflectivity() != 0 && depth < DEPTH_LIMIT) {
+        Ray reflected_ray = r.reflect(intersect_loc, object->normal(intersect_loc));
+        Color reflection_color = traceRay(reflected_ray, depth + 1);
+        result_color += object->get_reflectivity() * reflection_color;
+    }
+    return result_color;
 }
 
 /**

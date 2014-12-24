@@ -23,11 +23,12 @@ using namespace std;
  */
 class SceneObject {
     Color surfaceColor;
+    float reflectivity;
 public:
     /**
      * Initialize surface color to gray
      */
-    SceneObject() : surfaceColor(Color(.5, .5, .5)) {}
+    SceneObject() : surfaceColor(Color(.5, .5, .5)), reflectivity(0) {}
     virtual ~SceneObject() {}
 
     /**
@@ -41,6 +42,16 @@ public:
     void setSurfaceColor(const Color &c) {surfaceColor = c;}
 
     /**
+     * Return the objects reflectivity
+     */
+    float get_reflectivity() const {return reflectivity;}
+
+    /**
+     * Set the reflectivity of an object to r
+     */
+    void set_reflectivity(float r) {reflectivity = r;}
+
+    /**
      * Calculate the t-value at which a ray first intersects this object
      * @param r Intersecting ray
      * @return The t-value of the intersection, or NO_INTERSECT if the ray
@@ -49,7 +60,7 @@ public:
     virtual float intersection(const Ray &r) const = 0;
 
     /**
-     * Returns the normal to the surface at a given point.
+     * Returns the (normalized) normal to the surface at a given point.
      * @param X The point of the normal. Assumes x is on surface.
      * @return Vector representing the normal
      */
@@ -78,7 +89,7 @@ public:
      * The normal vector of the plane
      * The shortest distance between the plane and origin
      */
-    Plane(float distance, const Vector3F &normal) : d(distance), N(normal) {}
+    Plane(float distance, const Vector3F &normal) : d(distance), N(normal.normalize()) {}
     float getDistance() const {return d;}
     Vector3F getNormal() const {return N;}
     float intersection(const Ray &r) const;
@@ -125,7 +136,7 @@ public:
     void addObject(SPSceneObject o);
     void addLight(SPLight l);
     void set_camera(SPCamera c);
-    Color traceRay(Ray &r) const;
+    Color traceRay(Ray &r, int depth = 0) const;
     SPSceneObject findClosestObject(const Ray &r, float &tIntersect) const;
     void render(int imgSize, ostream &os);
 };

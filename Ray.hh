@@ -18,7 +18,8 @@ public:
     Vector3F getOrigin() const;
     Vector3F getDirection() const;
     Vector3F getPointAtT(float t) const;
-
+    Ray reflect(const Vector3F &position, const Vector3F &normal, \
+                float delta = 0.0001) const;
 };
 
 #endif
